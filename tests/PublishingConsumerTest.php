@@ -3,6 +3,8 @@
 namespace Webit\MessageBus;
 
 use Prophecy\Prophecy\ObjectProphecy;
+use Webit\MessageBus\Exception\MessageConsumptionException;
+use Webit\MessageBus\Exception\MessagePublicationException;
 
 class PublishingConsumerTest extends AbstractTestCase
 {
@@ -26,6 +28,20 @@ class PublishingConsumerTest extends AbstractTestCase
         $message = $this->randomMessage();
         $this->publisher->publish($message)->shouldBeCalled();
 
+        $this->sut->consume($message);
+    }
+
+    /**
+     * @test
+     */
+    public function itWrapsPublicationExceptionWithConsumptionOne()
+    {
+        $message = $this->randomMessage();
+
+        $exception = $this->prophesize(MessagePublicationException::class)->reveal();
+        $this->publisher->publish($message)->willThrow($exception);
+        $this->expectException(MessageConsumptionException::class);
+        
         $this->sut->consume($message);
     }
 }

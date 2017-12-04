@@ -2,6 +2,9 @@
 
 namespace Webit\MessageBus;
 
+use Webit\MessageBus\Exception\MessageConsumptionException;
+use Webit\MessageBus\Exception\MessagePublicationException;
+
 class PublishingConsumer implements Consumer
 {
     /** @var Publisher */
@@ -21,6 +24,10 @@ class PublishingConsumer implements Consumer
      */
     public function consume(Message $message)
     {
-        $this->publisher->publish($message);
+        try {
+            $this->publisher->publish($message);
+        } catch (MessagePublicationException $e) {
+            throw MessageConsumptionException::forMessage($message, 0, $e);
+        }
     }
 }
