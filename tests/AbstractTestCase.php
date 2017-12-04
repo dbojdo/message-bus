@@ -21,4 +21,13 @@ abstract class AbstractTestCase extends TestCase
     {
         return new Message($this->randomString(), $this->randomString());
     }
+
+    /**
+     * @param int $max
+     * @return int
+     */
+    public function randomPositiveInt($max = PHP_INT_MAX)
+    {
+        return mt_rand(1, $max);
+    }
 }
