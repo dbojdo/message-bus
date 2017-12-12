@@ -5,7 +5,7 @@ namespace Webit\MessageBus;
 use Webit\MessageBus\Exception\MessageConsumptionException;
 use Webit\MessageBus\Exception\MessagePublicationException;
 
-class PublishingConsumer implements Consumer
+final class PublishingConsumer implements Consumer
 {
     /** @var Publisher */
     private $publisher;
