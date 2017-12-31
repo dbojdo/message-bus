@@ -2,7 +2,7 @@
 
 namespace Webit\MessageBus;
 
-use Webit\MessageBus\Exception\MessagePublicationException;
+use Webit\MessageBus\Publisher\Exception\MessagePublicationException;
 
 interface Publisher
 {

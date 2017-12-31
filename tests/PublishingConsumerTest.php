@@ -3,8 +3,10 @@
 namespace Webit\MessageBus;
 
 use Prophecy\Prophecy\ObjectProphecy;
-use Webit\MessageBus\Exception\MessageConsumptionException;
-use Webit\MessageBus\Exception\MessagePublicationException;
+use Webit\MessageBus\Consumer\Exception\CannotConsumeMessageException;
+use Webit\MessageBus\Consumer\Exception\UnsupportedMessageTypeException;
+use Webit\MessageBus\Publisher\Exception\CannotPublishMessageException;
+use Webit\MessageBus\Publisher\Exception\UnsupportedMessageTypeException as PublisherUnsupportedMessageTypeException;
 
 class PublishingConsumerTest extends AbstractTestCase
 {
@@ -34,13 +36,27 @@ class PublishingConsumerTest extends AbstractTestCase
     /**
      * @test
      */
+    public function itWrapsUnsupportedMessageTypePublicationException()
+    {
+        $message = $this->randomMessage();
+
+        $exception = PublisherUnsupportedMessageTypeException::forMessage($message);
+        $this->publisher->publish($message)->willThrow($exception);
+        $this->expectException(UnsupportedMessageTypeException::class);
+
+        $this->sut->consume($message);
+    }
+
+    /**
+     * @test
+     */
     public function itWrapsPublicationExceptionWithConsumptionOne()
     {
         $message = $this->randomMessage();
 
-        $exception = $this->prophesize(MessagePublicationException::class)->reveal();
+        $exception = CannotPublishMessageException::forMessage($message);
         $this->publisher->publish($message)->willThrow($exception);
-        $this->expectException(MessageConsumptionException::class);
+        $this->expectException(CannotConsumeMessageException::class);
         
         $this->sut->consume($message);
     }

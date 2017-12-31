@@ -2,7 +2,7 @@
 
 namespace Webit\MessageBus;
 
-use Webit\MessageBus\Exception\MessageConsumptionException;
+use Webit\MessageBus\Consumer\Exception\MessageConsumptionException;
 
 interface Consumer
 {

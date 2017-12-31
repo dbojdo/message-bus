@@ -1,10 +1,10 @@
 <?php
 
-namespace Webit\MessageBus\Exception;
+namespace Webit\MessageBus\Publisher\Exception;
 
 use Webit\MessageBus\Message;
 
-class MessageConsumptionException extends \RuntimeException
+abstract class AbstractMessagePublicationException extends \RuntimeException implements MessagePublicationException
 {
     /** @var Message */
     private $messageBusMessage;
@@ -13,12 +13,12 @@ class MessageConsumptionException extends \RuntimeException
      * @param Message $message
      * @param int $code
      * @param \Exception|null $previous
-     * @return MessageConsumptionException
+     * @return MessagePublicationException
      */
     public static function forMessage(Message $message, $code = 0, \Exception $previous = null)
     {
-        $exception = new self(
-            sprintf('Error during consumption of the message of type "%s".', $message->type()),
+        $exception = new static(
+            static::createExceptionMessage($message),
             $code,
             $previous
         );
@@ -27,6 +27,8 @@ class MessageConsumptionException extends \RuntimeException
 
         return $exception;
     }
+
+    abstract protected static function createExceptionMessage(Message $message): string;
 
     /**
      * @return Message

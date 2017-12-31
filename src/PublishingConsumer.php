@@ -2,8 +2,10 @@
 
 namespace Webit\MessageBus;
 
-use Webit\MessageBus\Exception\MessageConsumptionException;
-use Webit\MessageBus\Exception\MessagePublicationException;
+use Webit\MessageBus\Consumer\Exception\CannotConsumeMessageException;
+use Webit\MessageBus\Consumer\Exception\UnsupportedMessageTypeException;
+use Webit\MessageBus\Publisher\Exception\MessagePublicationException;
+use Webit\MessageBus\Publisher\Exception\UnsupportedMessageTypeException as PublisherUnsupportedMessageTypeException;
 
 final class PublishingConsumer implements Consumer
 {
@@ -26,8 +28,12 @@ final class PublishingConsumer implements Consumer
     {
         try {
             $this->publisher->publish($message);
-        } catch (MessagePublicationException $e) {
-            throw MessageConsumptionException::forMessage($message, 0, $e);
+        }
+        catch (PublisherUnsupportedMessageTypeException $e) {
+            throw UnsupportedMessageTypeException::forMessage($message, 0, $e);
+        }
+        catch (MessagePublicationException $e) {
+            throw CannotConsumeMessageException::forMessage($message, 0, $e);
         }
     }
 }
