@@ -16,12 +16,16 @@
         }
     },
     "require-dev": {
+        "psr/log": "^1.0",
         "phpunit/phpunit": "^6.0"
     },
     "autoload-dev": {
         "psr-4": {
           "Webit\\MessageBus\\": "tests/"
         }
+    },
+    "suggest": {
+        "psr/log": "To use logging publisher, consumer and exception handlers."
     },
     "extra": {
         "branch-alias": {

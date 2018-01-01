@@ -1,9 +1,12 @@
 <?php
 
-namespace Webit\MessageBus;
+namespace Webit\MessageBus\Consumer;
 
+use Webit\MessageBus\Consumer;
 use Webit\MessageBus\Consumer\Exception\CannotConsumeMessageException;
 use Webit\MessageBus\Consumer\Exception\UnsupportedMessageTypeException;
+use Webit\MessageBus\Message;
+use Webit\MessageBus\Publisher;
 use Webit\MessageBus\Publisher\Exception\MessagePublicationException;
 use Webit\MessageBus\Publisher\Exception\UnsupportedMessageTypeException as PublisherUnsupportedMessageTypeException;
 

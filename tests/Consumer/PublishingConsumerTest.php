@@ -1,10 +1,12 @@
 <?php
 
-namespace Webit\MessageBus;
+namespace Webit\MessageBus\Consumer;
 
 use Prophecy\Prophecy\ObjectProphecy;
+use Webit\MessageBus\AbstractTestCase;
 use Webit\MessageBus\Consumer\Exception\CannotConsumeMessageException;
 use Webit\MessageBus\Consumer\Exception\UnsupportedMessageTypeException;
+use Webit\MessageBus\Publisher;
 use Webit\MessageBus\Publisher\Exception\CannotPublishMessageException;
 use Webit\MessageBus\Publisher\Exception\UnsupportedMessageTypeException as PublisherUnsupportedMessageTypeException;
 
