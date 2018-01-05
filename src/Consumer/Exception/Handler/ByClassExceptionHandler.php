@@ -11,14 +11,14 @@ final class ByClassExceptionHandler implements ExceptionHandler
     private $unsupportedMessageHandler;
 
     /** @var ExceptionHandler */
-    private $cannotPublishMessageHandler;
+    private $cannotConsumeMessageHandler;
 
     public function __construct(
         ExceptionHandler $unsupportedMessageHandler = null,
         ExceptionHandler $cannotPublishMessageHandler = null
     ) {
         $this->unsupportedMessageHandler = $unsupportedMessageHandler ?: new ThrowingExceptionHandler();
-        $this->cannotPublishMessageHandler = $cannotPublishMessageHandler ?: new ThrowingExceptionHandler();
+        $this->cannotConsumeMessageHandler = $cannotPublishMessageHandler ?: new ThrowingExceptionHandler();
     }
 
     /**
@@ -31,7 +31,7 @@ final class ByClassExceptionHandler implements ExceptionHandler
                 $this->unsupportedMessageHandler->handle($exception);
                 break;
             default:
-                $this->cannotPublishMessageHandler->handle($exception);
+                $this->cannotConsumeMessageHandler->handle($exception);
         }
     }
 }
